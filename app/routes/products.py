@@ -3,6 +3,7 @@ from flask_login import login_required
 
 from app.models import Product, db
 
+
 products = Blueprint(
     "products",
     __name__,
@@ -114,7 +115,9 @@ def update_product(product_id):
         product.name = name
 
     if "description" in data:
-        product.description = str(data["description"]).strip()
+        product.description = str(
+            data["description"]
+        ).strip()
 
     if "price" in data:
         try:

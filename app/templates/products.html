@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+    <title>Product Catalog</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f4f4f4;
+        }
+
+        header {
+            background: #222;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            padding: 18px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+        }
+
+        .product-card h2 {
+            margin-top: 0;
+        }
+
+        .price {
+            color: #087830;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .stock {
+            color: #555;
+        }
+
+        .empty-message {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>My Ecommerce Product Catalog</h1>
+        <p>Available products and inventory</p>
+    </header>
+
+    <main class="container">
+        {% if products %}
+            <div class="products">
+                {% for product in products %}
+                    <article class="product-card">
+                        <h2>{{ product.name }}</h2>
+
+                        <p>
+                            {{ product.description or
+                               "No description available." }}
+                        </p>
+
+                        <p class="price">
+                            ${{ "%.2f"|format(product.price) }}
+                        </p>
+
+                        <p class="stock">
+                            Stock: {{ product.stock }}
+                        </p>
+                    </article>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="empty-message">
+                No products are currently available.
+            </p>
+        {% endif %}
+    </main>
+</body>
+</html>
