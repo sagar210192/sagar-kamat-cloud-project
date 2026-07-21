@@ -1,9 +1,10 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 from flask_login import LoginManager
 from flask_migrate import Migrate
 
-from app.models import User, db
+from app.models import Product, User, db
 from config import Config
+
 
 login_manager = LoginManager()
 migrate = Migrate()
@@ -37,9 +38,11 @@ def create_app(test_config=None):
 
     from app.routes.auth import auth
     from app.routes.products import products
+    from app.routes.cart import cart
 
     app.register_blueprint(auth)
     app.register_blueprint(products)
+    app.register_blueprint(cart)
 
     @app.route("/", methods=["GET"])
     def home():
@@ -49,9 +52,22 @@ def create_app(test_config=None):
                 "register": "POST /auth/register",
                 "login": "POST /auth/login",
                 "logout": "POST /auth/logout",
-                "products": "GET /api/products"
+                "products_api": "GET /api/products",
+                "product_catalog": "GET /products",
+                "shopping_cart": "GET /cart"
             }
         }), 200
+
+    @app.route("/products", methods=["GET"])
+    def product_catalog():
+        all_products = Product.query.order_by(
+            Product.created_at.desc()
+        ).all()
+
+        return render_template(
+            "products.html",
+            products=all_products
+        )
 
     @app.errorhandler(404)
     def not_found(error):

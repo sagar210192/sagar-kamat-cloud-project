@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+    <title>Shopping Cart</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .cart-item {
+            border-bottom: 1px solid #ddd;
+            padding: 15px 0;
+        }
+
+        .price {
+            font-weight: bold;
+            color: green;
+        }
+
+        .total {
+            font-size: 22px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        button,
+        a {
+            display: inline-block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Shopping Cart</h1>
+
+        <a href="/products">Back to Products</a>
+
+        {% if products %}
+            {% for product in products %}
+                <div class="cart-item">
+                    <h2>{{ product.name }}</h2>
+
+                    <p>
+                        {{ product.description or
+                           "No description available." }}
+                    </p>
+
+                    <p class="price">
+                        ${{ "%.2f"|format(product.price) }}
+                    </p>
+
+                    <form
+                        method="POST"
+                        action="/cart/remove/{{ product.id }}"
+                    >
+                        <button type="submit">
+                            Remove
+                        </button>
+                    </form>
+                </div>
+            {% endfor %}
+
+            <p class="total">
+                Total: ${{ "%.2f"|format(total) }}
+            </p>
+        {% else %}
+            <p>Your cart is empty.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
