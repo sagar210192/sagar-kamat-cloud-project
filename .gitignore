@@ -6,3 +6,4 @@ __pycache__/
 instance/
 *.db
 cookies.txt
+load-balancer-demo/venv/
