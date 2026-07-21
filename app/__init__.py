@@ -39,10 +39,12 @@ def create_app(test_config=None):
     from app.routes.auth import auth
     from app.routes.products import products
     from app.routes.cart import cart
+    from app.routes.orders import orders
 
     app.register_blueprint(auth)
     app.register_blueprint(products)
     app.register_blueprint(cart)
+    app.register_blueprint(orders)
 
     @app.route("/", methods=["GET"])
     def home():

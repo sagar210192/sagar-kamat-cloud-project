@@ -2,66 +2,113 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0"
     >
+
     <title>Shopping Cart</title>
 
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background: #f4f4f4;
             margin: 0;
             padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            color: #222;
         }
 
         .container {
             max-width: 800px;
             margin: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
+            padding: 25px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+        }
+
+        .navigation {
+            margin-bottom: 20px;
+        }
+
+        .navigation a {
+            display: inline-block;
+            margin-right: 12px;
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: bold;
         }
 
         .cart-item {
-            border-bottom: 1px solid #ddd;
             padding: 15px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .cart-item h2 {
+            margin-bottom: 8px;
         }
 
         .price {
+            color: #087830;
+            font-size: 18px;
             font-weight: bold;
-            color: green;
         }
 
         .total {
+            margin-top: 25px;
             font-size: 22px;
             font-weight: bold;
+        }
+
+        button {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            background-color: #2563eb;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #1d4ed8;
+        }
+
+        .remove-button {
+            background-color: #dc2626;
+        }
+
+        .remove-button:hover {
+            background-color: #b91c1c;
+        }
+
+        .place-order-form {
             margin-top: 20px;
         }
 
-        button,
-        a {
-            display: inline-block;
-            margin-top: 10px;
+        .empty-message {
+            padding: 20px 0;
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
+    <main class="container">
         <h1>Shopping Cart</h1>
 
-        <a href="/products">Back to Products</a>
+        <nav class="navigation">
+            <a href="/products">Back to Products</a>
+            <a href="/orders">View Orders</a>
+        </nav>
 
         {% if products %}
             {% for product in products %}
-                <div class="cart-item">
+                <section class="cart-item">
                     <h2>{{ product.name }}</h2>
 
                     <p>
-                        {{ product.description or
-                           "No description available." }}
+                        {{ product.description
+                           or "No description available." }}
                     </p>
 
                     <p class="price">
@@ -72,19 +119,34 @@
                         method="POST"
                         action="/cart/remove/{{ product.id }}"
                     >
-                        <button type="submit">
+                        <button
+                            class="remove-button"
+                            type="submit"
+                        >
                             Remove
                         </button>
                     </form>
-                </div>
+                </section>
             {% endfor %}
 
             <p class="total">
                 Total: ${{ "%.2f"|format(total) }}
             </p>
+
+            <form
+                class="place-order-form"
+                method="POST"
+                action="/orders/place"
+            >
+                <button type="submit">
+                    Place Order
+                </button>
+            </form>
         {% else %}
-            <p>Your cart is empty.</p>
+            <p class="empty-message">
+                Your cart is empty.
+            </p>
         {% endif %}
-    </div>
+    </main>
 </body>
 </html>
