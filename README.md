@@ -130,3 +130,23 @@ Future enhancements:
 ## GitHub Repository
 
 https://github.com/sagar210192/sagar-kamat-cloud-project
+
+
+
+## Setup Instructions
+
+1. Clone the repository:
+git clone https://github.com/sagar210192/sagar-kamat-cloud-project.git
+
+2. cd sagar-kamat-cloud-project
+Create and activate a virtual environment:
+python3 -m venv venv
+source venv/bin/activate
+
+3. Install dependencies:
+pip install -r requirements.txt
+
+4. Run the application:
+python app.py
+
+5. Open the application in the browser using port 5000.
