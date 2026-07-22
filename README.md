@@ -131,7 +131,10 @@ Future enhancements:
 
 https://github.com/sagar210192/sagar-kamat-cloud-project
 
-Setup Instructions
+
+
+## Setup Instructions
+
 1. Clone the repository:
 git clone https://github.com/sagar210192/sagar-kamat-cloud-project.git
 
